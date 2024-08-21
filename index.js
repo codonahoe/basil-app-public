@@ -16,3 +16,7 @@ connection.connect(function(err){
 var app = express();
 app.use(cors)
 app.use(express.json())
+
+var server = app.listen(8080, () => {
+    console.log('App listening on 8080')
+})
