@@ -23,4 +23,8 @@ app.listen(8080, () => {
 
 app.get('/api/data', (req, res) => {
     res.json({ message: 'Hello from Express!' });
-  });
+});
+
+  app.get('/', (req, res) => {
+    res.send('Welcome to the homepage!');
+});
