@@ -1,1 +1,94 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+@import './sass/_variables';
+/* styles.css */
+/* styles.css */
+
+body {
+    font-family: var(--font-family-base) !important;
+    color: var(--slate-900);
+    background-color: var(--slate-000);
+}
+
+#page-container {
+    position: relative;
+    min-height: calc(100vh - 91px);
+}
+
+#content-container {
+    padding: 25px;
+    margin-top: 25px;
+}
+
+#footer {
+    background-color: var(--green-700);
+    color: white;
+    bottom: 0;
+    left: 0;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    position: absolute;
+    width: 100%;
+}
+
+.basil-material {
+    background-color: #90EE90;
+    margin: 0px 0px;
+    border-radius: 4px;
+    -moz-boz-shadow: 0px 1px 4px -px #d9d9d9;
+    -webkit-box-shadow: 0px 1px 4px 0px #d9d9d9;
+    box-shadow: 0px 1px 4px 0px #d9d9d9;
+}
+
+.basil-material-body {
+    padding: 0;
+    margin-top: 0;
+}
+
+.basil-material-header {
+    background-color: var(--slate-200);
+    padding: 10px 20px;
+    border-bottom: 2px solid var(--slate-300);
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+}
+
+.point-hover {
+    &.disabled:hover{
+        cursor:not-allowed
+    }
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.border-slate-900 { border-color: var(--slate-900) !important; }
+.border-blue-700 { border-color: var(--blue-700) !important; }
+.text-blue { color: var(--blue-800); }
+.text-green { color: var(--green-700); }
+.text-orange { color: var(--orange-800); }
+.text-gray { color: var(--cool-grey-700); }
+
+
+
+
+// Import Bootstrap's SCSS files
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/mixins";
+
+// Customize Bootstrap variables
+$theme-colors: (
+  "primary": #0d6efd,
+  "secondary": #6c757d,
+  "success": #198754,
+  "info": #0dcaf0,
+  "warning": #ffc107,
+  "danger": #dc3545,
+  "light": #f8f9fa,
+  "dark": #212529,
+  "blue-900": #003366, // Add your custom color
+);
+
+// Import the rest of Bootstrap
+@import "../node_modules/bootstrap/scss/bootstrap";
