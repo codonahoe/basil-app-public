@@ -1,6 +1,7 @@
 var express = require('express');
 var mysql = require('mysql2');
-var cors = require('cors')
+const path = require('path');   
+var cors = require('cors');
 var connection = mysql.createConnection({
     host: 'ls-65984030458039fd3d922fc04d034a82be10f2be.czueisqkgcoa.us-east-1.rds.amazonaws.com',
     user: 'dbmasteruser',
