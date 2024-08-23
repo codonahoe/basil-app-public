@@ -18,19 +18,34 @@ var app = express();
 app.use(cors())
 app.use(express.json())
 
-app.listen(8080, () => {
+var server = app.listen(8080, () => {
     console.log('App listening on 8080')
 })
 
-app.use(express.static(path.join(__dirname, 'dist', 'basil-frontend')));
+app.use(express.static(path.join(__dirname, 'basil-frontend/dist', 'basil-frontend')));
 // Handle Angular routing
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist', 'basil-frontend', 'index.html'));
-  });
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'basil-frontend/dist', 'basil-frontend', 'index.html'));
+});
+
+app.use((req, res, next) => 
+{
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+  );
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'GET, POST, PATCH, DELETE, OPTIONS'
+  );
+  next();
+});
 
 app.get('/api/data', (req, res) => {
     res.json({ message: 'Hello from Express!' });
 });
 
-
-
+module.exports = {
+    server:server
+};
