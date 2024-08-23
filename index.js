@@ -21,7 +21,15 @@ app.listen(8080, () => {
     console.log('App listening on 8080')
 })
 
+app.use(express.static(path.join(__dirname, 'dist', 'basil-frontend')));
+// Handle Angular routing
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist', 'basil-frontend', 'index.html'));
+  });
+
 app.get('/api/data', (req, res) => {
     res.json({ message: 'Hello from Express!' });
 });
+
+
 
