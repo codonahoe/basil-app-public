@@ -15,7 +15,7 @@ export class AppComponent {
 
 
   testConnectionToBackEnd(){
-    this.http.get<any>('https://goldfish-app-ueyn8.ondigitalocean.app/api/data').subscribe((res) => console.log(res))
+    //this.http.get<any>('http://localhost:8080/api/data').subscribe((res) => console.log(res))
   }
 
 
