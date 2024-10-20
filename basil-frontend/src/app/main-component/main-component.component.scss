@@ -1,0 +1,39 @@
+@import '../../styles.scss';
+.navbar {
+    background-color: $green-600;
+    color: white;
+}
+
+html, body {
+    height: 100%; /* Make sure the body takes the full height */
+    margin: 0; /* Remove default margin */
+}
+
+.basil-material {
+    height: calc(100% - 56px); /* Subtract the height of the navbar (adjust as necessary) */
+    padding: 20px; /* Add some padding if needed */
+    background-color: #f8f9fa; /* Optional: Set a background color */
+}
+
+.basil-material-body {
+    height: 100%; /* Ensure it takes the full height available */
+    display: flex;
+    flex-direction: column; /* Allows for more flexible layout options */
+    justify-content: space-between; /* Space between rows if needed */
+}
+
+
+.label {
+    background-color: #f8f9fa; /* Light gray background */
+    color: #343a40; /* Dark text color */
+    font-weight: bold; /* Bold text */
+    text-align: center; /* Centered text */
+    border: 1px solid #ced4da; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px; /* Spacing inside the div */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+.label:hover {
+    background-color: #e2e6ea; /* Slightly darker on hover */
+}

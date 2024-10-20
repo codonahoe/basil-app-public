@@ -49,8 +49,7 @@ app.get('/api/data', async (req, res) => {
 });
 
 async function getResults() {
-  try {
-    console.log(conn)
+  try {   
     return conn.execute('SELECT * FROM measurements');
   } catch (error) {
     console.error('Database query failed:', error);
