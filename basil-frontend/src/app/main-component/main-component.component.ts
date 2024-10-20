@@ -21,7 +21,7 @@ export class MainComponentComponent implements OnInit{
       .pipe()
       .subscribe((data) => {
         [this.userData] = data;
-        this.userData.temperature = this.roundMeasurementsToNearestHundreths(this.userData);
+        this.userData = this.roundMeasurementsToNearestHundreths(this.userData);
       });
   }
 
@@ -30,6 +30,14 @@ export class MainComponentComponent implements OnInit{
   }
 
   roundMeasurementsToNearestHundreths(userData:UserData){
-    return Math.round(userData.temperature * 10) / 10;
+    return {
+      id: userData.id,
+      temperature: Math.round(userData.temperature * 10) / 10,
+      humidity: Math.round(userData.humidity * 10) / 10,
+      ph: Math.round(userData.ph * 10) / 10,
+      color: Math.round(userData.color * 10) / 10,
+      light: Math.round(userData.light * 10) / 10,
+      waterLevel: Math.round(userData.waterLevel * 10) / 10,
+    } as UserData
   }
 }

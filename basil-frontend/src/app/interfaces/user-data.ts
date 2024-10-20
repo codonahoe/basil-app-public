@@ -5,4 +5,5 @@ export interface UserData{
     color:number,
     ph:number,
     waterLevel:number,
+    light:number,
 }   
