@@ -10,6 +10,6 @@ export class MainServiceService {
   constructor(public http:HttpClient) { }
 
   getMeasurementData(){
-    return this.http.get<Array<UserData>>('http://localhost:8080/api/data');
+    return this.http.get<Array<UserData>>('https://goldfish-app-ueyn8.ondigitalocean.app/api/data');
   }
 }
