@@ -1,4 +1,5 @@
 var express = require('express');
+require('dotenv').config();
 var mysql = require('mysql2/promise');
 const path = require('path');   
 var cors = require('cors');
@@ -8,6 +9,16 @@ var conn = mysql.createPool({
     password: 'G~C$BJ5qfZ3r9SCQAhJ7%4ig2$fQ9osk',
     database: 'dbmaster',
 })
+
+var openai = require('openai');
+openai.apiKey = process.env.OPENAI_API_KEY;
+
+const openAi = new openai.OpenAI({
+  organization: "org-hOvZbpFaPmxNg8mzKBD138Xk",
+  project: "proj_oa67gWVfJpnp5ULtXqhQ5Gfv	",
+});
+
+
 
 var app = express();
 app.use(cors())
@@ -47,6 +58,28 @@ app.get('/api/data', async (req, res) => {
     res.status(500).json({ message: 'Internal Server Error' }); 
   }
 });
+
+app.get('/api/ai-feedback', async (req, res) => {
+  try {
+    const completion = await openAi.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+          { role: "system", content: "You are a helpful assistant." },
+          {
+              role: "user",
+              content: "Write a haiku about recursion in programming.",
+          },
+      ],
+  });
+    console.log(completion.choices[0].message.content);
+
+    return res.json(rows); 
+  } catch (error) {
+    console.error('Error fetching results:', error);
+    res.status(500).json({ message: 'Internal Server Error' }); 
+  }
+});
+
 
 async function getResults() {
   try {   

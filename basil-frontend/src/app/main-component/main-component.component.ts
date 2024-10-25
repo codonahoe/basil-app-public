@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { UserData } from '../interfaces/user-data';
+import { MainServiceService } from '../services/main.service';
 
 @Component({
   selector: 'app-main-component',
@@ -12,21 +13,20 @@ export class MainComponentComponent implements OnInit{
   public userData:Array<UserData> = [];
   public title = 'basil-frontend';
   
-  constructor(private http:HttpClient){
+  constructor(
+    private http:HttpClient,
+    private mainService:MainServiceService          
+  ){
 
   }
 
   ngOnInit(): void {
-      this.getMeasurementData()
+      this.mainService.getMeasurementData()
       .pipe()
       .subscribe((data) => {
         this.userData = data;
         this.userData = this.roundMeasurementsToNearestHundreths(this.userData);
       });
-  }
-
-  getMeasurementData(){
-    return this.http.get<Array<UserData>>('http://localhost:8080/api/data');
   }
 
   roundMeasurementsToNearestHundreths(userData:Array<UserData>){
