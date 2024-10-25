@@ -15,7 +15,7 @@ export class MainComponentComponent implements OnInit{
   
   constructor(
     private http:HttpClient,
-    private mainService:MainServiceService          
+    public mainService:MainServiceService          
   ){
 
   }
@@ -27,9 +27,16 @@ export class MainComponentComponent implements OnInit{
         this.userData = data;
         this.userData = this.roundMeasurementsToNearestHundreths(this.userData);
       });
+      this.mainService.generateAiResponse()
+      .pipe()
+      .subscribe((data) => {
+        this.userData = data;
+        this.userData = this.roundMeasurementsToNearestHundreths(this.userData);
+      });
   }
 
   roundMeasurementsToNearestHundreths(userData:Array<UserData>){
+    this.mainService.userData = userData;
     return userData.map((ud) => { return {
       id: ud.id,
       temperature: Math.round(ud.temperature * 10) / 10,
@@ -41,5 +48,5 @@ export class MainComponentComponent implements OnInit{
     } as UserData
     });
   }
-  
+
 }

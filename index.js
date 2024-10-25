@@ -61,19 +61,42 @@ app.get('/api/data', async (req, res) => {
 
 app.get('/api/ai-feedback', async (req, res) => {
   try {
+
+    let rows = await getResults();
+
+    let plantData = [];
+    rows[0].forEach((record) => {
+      plantData.push({
+        temperature: record.temperature,
+        humidity: record.humidity,
+        color: record.color,
+        light: record.light,
+        ph: record.ph,
+      })
+    })
+
+    console.log(plantData)
+    const content = `I have a basil plant in a hydroponic system with 
+    these values, please help me improve the plants health with recommendations. There are 3 sets of measurements,
+    each are represented in parentheses in order from latest to oldest, the first being 1 day old, then 2 days old, then 3 days old.
+    Temperature of the environment is (${plantData[0].temperature} F, ${plantData[1].temperature} F,${plantData[2].temperature} F), 
+    Humidity is (${plantData[0].humidity}%, ${plantData[1].humidity}%, ${plantData[2].humidity}%), 
+    Color is (${plantData[0].color}, ${plantData[1].color}, ${plantData[2].color}), 
+    pH is (${plantData[0].ph}, ${plantData[1].ph}, ${plantData[2].ph})`
+
     const completion = await openAi.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [
           { role: "system", content: "You are a helpful assistant." },
           {
               role: "user",
-              content: "Write a haiku about recursion in programming.",
+              content: content,
           },
       ],
   });
-    console.log(completion.choices[0].message.content);
+   console.log(completion.choices[0].message.content);
 
-    return res.json(rows); 
+    return res.json(completion.choices[0].message.content); 
   } catch (error) {
     console.error('Error fetching results:', error);
     res.status(500).json({ message: 'Internal Server Error' }); 
