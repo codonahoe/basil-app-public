@@ -9,7 +9,7 @@ import { UserData } from '../interfaces/user-data';
 })
 export class MainComponentComponent implements OnInit{
 
-  public userData:UserData | null = null;
+  public userData:Array<UserData> = [];
   public title = 'basil-frontend';
   
   constructor(private http:HttpClient){
@@ -20,24 +20,26 @@ export class MainComponentComponent implements OnInit{
       this.getMeasurementData()
       .pipe()
       .subscribe((data) => {
-        [this.userData] = data;
+        this.userData = data;
         this.userData = this.roundMeasurementsToNearestHundreths(this.userData);
       });
   }
 
   getMeasurementData(){
-    return this.http.get<Array<UserData>>('https://goldfish-app-ueyn8.ondigitalocean.app/api/data');
+    return this.http.get<Array<UserData>>('http://localhost:8080/api/data');
   }
 
-  roundMeasurementsToNearestHundreths(userData:UserData){
-    return {
-      id: userData.id,
-      temperature: Math.round(userData.temperature * 10) / 10,
-      humidity: Math.round(userData.humidity * 10) / 10,
-      ph: Math.round(userData.ph * 10) / 10,
-      color: Math.round(userData.color * 10) / 10,
-      light: Math.round(userData.light * 10) / 10,
-      waterLevel: Math.round(userData.waterLevel * 10) / 10,
+  roundMeasurementsToNearestHundreths(userData:Array<UserData>){
+    return userData.map((ud) => { return {
+      id: ud.id,
+      temperature: Math.round(ud.temperature * 10) / 10,
+      humidity: Math.round(ud.humidity * 10) / 10,
+      ph: Math.round(ud.ph * 10) / 10,
+      color: Math.round(ud.color * 10) / 10,
+      light: Math.round(ud.light * 10) / 10,
+      waterLevel: Math.round(ud.waterLevel * 10) / 10,
     } as UserData
+    });
   }
+  
 }

@@ -50,7 +50,7 @@ app.get('/api/data', async (req, res) => {
 
 async function getResults() {
   try {   
-    return conn.execute('SELECT * FROM measurements');
+    return conn.execute('SELECT * FROM measurements ORDER BY addedUTCDateTime DESC LIMIT 3');
   } catch (error) {
     console.error('Database query failed:', error);
     throw error; 
