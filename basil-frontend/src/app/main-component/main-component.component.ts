@@ -27,12 +27,6 @@ export class MainComponentComponent implements OnInit{
         this.userData = data;
         this.userData = this.roundMeasurementsToNearestHundreths(this.userData);
       });
-      this.mainService.generateAiResponse()
-      .pipe()
-      .subscribe((data) => {
-        this.userData = data;
-        this.userData = this.roundMeasurementsToNearestHundreths(this.userData);
-      });
   }
 
   roundMeasurementsToNearestHundreths(userData:Array<UserData>){

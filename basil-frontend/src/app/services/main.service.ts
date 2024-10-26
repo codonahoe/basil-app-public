@@ -18,7 +18,7 @@ export class MainServiceService {
   }
 
   generateAiResponse(){
-    return this.http.get<Array<UserData>>('http://localhost:8080/api/ai-feedback');
+    return this.http.get<string>('http://localhost:8080/api/ai-feedback');
   }
 
   setUpModal(){

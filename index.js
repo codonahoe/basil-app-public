@@ -74,15 +74,28 @@ app.get('/api/ai-feedback', async (req, res) => {
         ph: record.ph,
       })
     })
-
-    console.log(plantData)
+    
     const content = `I have a basil plant in a hydroponic system with 
     these values, please help me improve the plants health with recommendations. There are 3 sets of measurements,
     each are represented in parentheses in order from latest to oldest, the first being 1 day old, then 2 days old, then 3 days old.
     Temperature of the environment is (${plantData[0].temperature} F, ${plantData[1].temperature} F,${plantData[2].temperature} F), 
     Humidity is (${plantData[0].humidity}%, ${plantData[1].humidity}%, ${plantData[2].humidity}%), 
     Color is (${plantData[0].color}, ${plantData[1].color}, ${plantData[2].color}), 
-    pH is (${plantData[0].ph}, ${plantData[1].ph}, ${plantData[2].ph})`
+    pH is (${plantData[0].ph}, ${plantData[1].ph}, ${plantData[2].ph}). I'm using angular and this response will be for an innerHTML element, give me pure code for innerHTML that looks clean, absolutely no comments or anything. 
+    Don't put the html with backticks. Here is an example <div>
+    <h2>Basil Plant Health Recommendations</h2>
+    <p><strong>Temperature:</strong> CHATGPT RECOMMENDATION HERE.</p>
+    <p><strong>Humidity:</strong> CHATGPT RECOMMENDATION HERE.</p>
+    <p><strong>Color:</strong> CHATGPT RECOMMENDATION HERE.</p>
+    <p><strong>pH Level:</strong> CHATGPT RECOMMENDATION HERE.</p>
+    <h3>Action Plan (give detailed action plan)</h3>
+    <ul>
+    (<li></li> suggestions as needed)
+        <li>CHATGPT RECOMMENDATION HERE.</li>
+        <li>CHATGPT RECOMMENDATION HERE.</li>
+        <li>CHATGPT RECOMMENDATION HERE.</li>
+    </ul>
+</div>`
 
     const completion = await openAi.chat.completions.create({
       model: "gpt-4o-mini",
@@ -94,7 +107,6 @@ app.get('/api/ai-feedback', async (req, res) => {
           },
       ],
   });
-   console.log(completion.choices[0].message.content);
 
     return res.json(completion.choices[0].message.content); 
   } catch (error) {

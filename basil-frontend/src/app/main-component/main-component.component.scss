@@ -22,6 +22,17 @@ html, body {
     justify-content: space-between; /* Space between rows if needed */
 }
 
+.green-button {
+    background-color: #28a745;  // Adjust this shade of green as needed
+    border-color: #28a745;
+    color: #000000; // Black text for contrast
+    &:hover {
+      background-color: #218838; // Darker green for hover effect
+      border-color: #1e7e34;
+    }
+  }
+  
+
 
 .label {
     background-color: #f8f9fa; /* Light gray background */

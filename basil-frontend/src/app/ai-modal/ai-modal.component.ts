@@ -10,7 +10,9 @@ import { MainServiceService } from '../services/main.service';
 })
 export class AiModalComponent implements OnInit, AfterViewInit, OnChanges {
 
-  @Input() generatePrompt: string = '';
+  @Input() generatePrompt: boolean = false;
+  public promptResponse: string = '';
+  public loading = false;
 
   constructor(public mainService:MainServiceService){
 
@@ -25,10 +27,15 @@ export class AiModalComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes) this.mainService.generateAiResponse()
-      .pipe()
-      .subscribe((res) => console.log(res)
-    )
+    if(changes){ 
+      this.loading = true;
+      this.mainService.generateAiResponse()
+        .pipe()
+        .subscribe((res) => {
+          this.loading = false;
+          this.promptResponse = res
+        });
+    }
 
   }
 }
