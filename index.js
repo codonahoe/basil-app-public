@@ -52,6 +52,7 @@ app.use((req, res, next) =>
 app.get('/api/data', async (req, res) => {
   try {
     let [rows, fields] = await getResults(); 
+    console.log(rows)
     return res.json(rows); 
   } catch (error) {
     console.error('Error fetching results:', error);

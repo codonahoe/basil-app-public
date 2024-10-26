@@ -6,4 +6,5 @@ export interface UserData{
     ph:number,
     waterLevel:number,
     light:number,
+    addedUTCDateTime:string,
 }   

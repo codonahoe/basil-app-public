@@ -29,7 +29,6 @@ export class MainServiceService {
     }
 
     this.modals.push(newModal);
-    console.log(this.modals)
   }
 
   openModal(){
