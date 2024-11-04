@@ -18,7 +18,7 @@
       
       <div class="container mt-5">
         <div *ngFor="let userData of userData; let i = index">
-            <div class="mt-3 label bg-light p-2 rounded">Measurement #{{ i + 1 }} taken on {{ userData.addedUTCDateTime }}</div>
+            <div class="mt-3 label grey-label p-2 rounded">Measurement #{{ i + 1 }} taken on {{ userData.addedUTCDateTime }}</div>
             <div *ngIf="i != 0">
                 <div class="row text-center mt-3">
                     <div class="col">

@@ -28,13 +28,13 @@ export class AiModalComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if(changes){ 
-      this.loading = true;
-      this.mainService.generateAiResponse()
-        .pipe()
-        .subscribe((res) => {
-          this.loading = false;
-          this.promptResponse = res
-        });
+      // this.loading = true;
+      // this.mainService.generateAiResponse()
+      //   .pipe()
+      //   .subscribe((res) => {
+      //     this.loading = false;
+      //     this.promptResponse = res
+      //   });
     }
 
   }

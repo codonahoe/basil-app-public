@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UserData } from '../interfaces/user-data';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import 'bootstrap';
 declare var bootstrap: any; // Declare bootstrap to avoid TypeScript errors
 @Injectable({
@@ -18,7 +18,16 @@ export class MainServiceService {
   }
 
   generateAiResponse(){
-    return this.http.get<string>('https://goldfish-app-ueyn8.ondigitalocean.app/api/ai-feedback');
+   // return this.http.get<string>('https://goldfish-app-ueyn8.ondigitalocean.app/api/ai-feedback');
+  }
+
+  validateLogin(username:string, password:string){
+    console.log(username)
+    const params = new HttpParams()
+    .set('username', username)
+    .set('password', password);
+
+    return this.http.get<number>('http://localhost:8080/api/login', { params });
   }
 
   setUpModal(){

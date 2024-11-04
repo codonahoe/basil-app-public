@@ -60,6 +60,21 @@ app.get('/api/data', async (req, res) => {
   }
 });
 
+app.get('/api/login', async (req, res) => {
+  try {
+    const request = req;
+    const username = request.query.username;
+  
+    let [rows, fields] = await getLogin(username); 
+    const password = rows[0].Password;
+    if(password == request.query.password) return res.json(200);
+    else return res.json(401);
+  } catch (error) {
+    console.error('Error fetching results:', error);
+    res.status(500).json({ message: 'Internal Server Error' }); 
+  }
+});
+
 app.get('/api/ai-feedback', async (req, res) => {
   try {
 
@@ -120,6 +135,15 @@ app.get('/api/ai-feedback', async (req, res) => {
 async function getResults() {
   try {   
     return conn.execute('SELECT * FROM measurements ORDER BY addedUTCDateTime DESC LIMIT 3');
+  } catch (error) {
+    console.error('Database query failed:', error);
+    throw error; 
+  }
+}
+
+async function getLogin(username) {
+  try {   
+    return conn.execute(`SELECT * FROM Users WHERE Username = '${username}'`);
   } catch (error) {
     console.error('Database query failed:', error);
     throw error; 

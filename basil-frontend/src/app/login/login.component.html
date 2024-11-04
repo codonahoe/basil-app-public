@@ -1,0 +1,21 @@
+<div class="login-container d-flex justify-content-center align-items-center">
+  <div class="login-card p-5 rounded shadow-lg">
+      <h2 class="text-center mb-4">Welcome to B.A.S.I.L</h2>
+        <div *ngIf="invalidCredentials" class="alert alert-danger text-center" role="alert">
+          Incorrect credentials, please update and try again.
+        </div>
+        <div *ngIf="loginSuccessful" class="alert alert-success text-center" role="alert">
+          Login successful, welcome!
+        </div>
+        <div class="mb-4">
+          <label for="username" class="form-label">Username</label>
+          <input class="form-control" [(ngModel)]="username" placeholder="Enter username">
+        </div>
+        <div class="mb-4">
+          <label for="password" class="form-label">Password</label>
+          <input class="form-control" [(ngModel)]="password" placeholder="Enter password">
+        </div>
+        <button type="submit" (click)="login()" class="btn login-btn w-100">Log In</button>
+  </div>
+</div>
+  
