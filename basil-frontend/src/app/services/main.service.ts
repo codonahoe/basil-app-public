@@ -18,7 +18,7 @@ export class MainServiceService {
   }
 
   generateAiResponse(){
-   // return this.http.get<string>('https://goldfish-app-ueyn8.ondigitalocean.app/api/ai-feedback');
+    return this.http.get<string>('https://goldfish-app-ueyn8.ondigitalocean.app/api/ai-feedback');
   }
 
   validateLogin(username:string, password:string){
@@ -27,7 +27,7 @@ export class MainServiceService {
     .set('username', username)
     .set('password', password);
 
-    return this.http.get<number>('http://localhost:8080/api/login', { params });
+    return this.http.get<number>('https://goldfish-app-ueyn8.ondigitalocean.app/api/login', { params });
   }
 
   setUpModal(){
