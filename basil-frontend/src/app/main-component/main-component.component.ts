@@ -18,6 +18,11 @@ export class MainComponentComponent implements OnInit{
     private http:HttpClient,
     public mainService:MainServiceService          
   ){
+    this.mainService.updateEsp32("15", "30")
+    .pipe()
+    .subscribe((val) => {
+      console.log(val);
+    })
 
   }
 

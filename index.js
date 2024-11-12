@@ -8,8 +8,10 @@ var conn = mysql.createPool({
     user: 'dbmasteruser',
     password: 'G~C$BJ5qfZ3r9SCQAhJ7%4ig2$fQ9osk',
     database: 'dbmaster',
-})
+});
 
+var ipAddress = '192.168.1.240';
+const axios = require('axios');
 var openai = require('openai');
 openai.apiKey = process.env.OPENAI_API_KEY;
 
@@ -149,6 +151,36 @@ async function getLogin(username) {
     throw error; 
   }
 }
+
+async function sendSensorData(temperature, humidity) {
+  try {
+    console.log(`${ipAddress}/update-sensor`)
+    const response = await axios.post(`http://${ipAddress}/update-sensor`, null, {
+      params: {
+        temperature: temperature,
+        humidity: humidity,
+      },
+    });
+    console.log('Response from ESP32:', response.data);
+  } catch (error) {
+    console.error('Error sending data to ESP32:', error.message);
+    throw error;
+  }
+}
+
+app.post('/api/send-to-esp32', (req, res) => {
+  const { temperature, humidity } = req.body;
+  console.log(temperature)
+  console.log(humidity)
+
+  if (temperature != null && humidity != null) {
+    sendSensorData(temperature, humidity)
+      .then(() => res.status(200).json({ status: 'success' }))
+      .catch((err) => res.status(500).json({ status: 'error', message: err.message }));
+  } else {
+    res.status(400).json({ status: 'error', message: 'Missing parameters' });
+  }
+});
 
 
 module.exports = {

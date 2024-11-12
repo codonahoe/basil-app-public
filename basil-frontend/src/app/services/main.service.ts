@@ -30,6 +30,10 @@ export class MainServiceService {
     return this.http.get<number>('https://goldfish-app-ueyn8.ondigitalocean.app/api/login', { params });
   }
 
+  updateEsp32(temperature:string, humidity:string){
+    return this.http.post<number>('http://localhost:8080/api/send-to-esp32', { temperature, humidity });
+  }
+
   setUpModal(){
     const modal = document.getElementById('aiModal');
     const newModal = {
