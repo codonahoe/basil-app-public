@@ -10,28 +10,7 @@ var conn = mysql.createPool({
     database: 'dbmaster',
 });
 
-const wifi = require('node-wifi');
 var ipAddress = '192.168.0.158';
-
-wifi.init({
-  iface: null // network interface, choose a random wifi interface if set to null
-});
-
-wifi.connect({ssid: 'Voiselle', password:'Password'}, async (error) => {
-  
-  if(error) console.log('not connected');
-  else console.log('connected')
-  try {
-    const response = await axios.post(`http://${ipAddress}/update-light-array`, null, {
-      params: {
-        waterPumpValue: true
-      },
-    });
-    console.log('ESP32 Response:', response.data);
-  } catch (error) {
-    console.error('Error querying ESP32:', error);
-  }
-})
 
 const axios = require('axios');
 var openai = require('openai');
