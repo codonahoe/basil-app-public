@@ -211,8 +211,7 @@ async function sendLightArrayOnOff(lightArrayValue) {
   try {
     const response = await axios.post(`http://192.168.0.80:80/update-light-array`, null, {
       params: {
-        lightArrayValue:lightArrayValue,
-        timeout: 100000,
+        lightArrayValue:lightArrayValue
       },
     });
     console.log('Response from ESP32:', response.data);
