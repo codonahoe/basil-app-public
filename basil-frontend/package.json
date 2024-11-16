@@ -22,6 +22,7 @@
     "bootstrap": "^5.3.3",
     "crypto-js": "^4.2.0",
     "date-fns": "^4.1.0",
+    "node-wifi": "^2.0.16",
     "openai": "^4.68.4",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

@@ -10,7 +10,28 @@ var conn = mysql.createPool({
     database: 'dbmaster',
 });
 
-var ipAddress = '192.168.0.80';
+const wifi = require('node-wifi');
+var ipAddress = '192.168.0.158';
+
+wifi.init({
+  iface: null // network interface, choose a random wifi interface if set to null
+});
+
+wifi.connect({ssid: 'Voiselle', password:'Password'}, async () => {
+  console.log('connected');
+
+  try {
+    const response = await axios.post(`http://${ipAddress}/update-light-array`, null, {
+      params: {
+        waterPumpValue: true
+      },
+    });
+    console.log('ESP32 Response:', response.data);
+  } catch (error) {
+    console.error('Error querying ESP32:', error);
+  }
+})
+
 const axios = require('axios');
 var openai = require('openai');
 openai.apiKey = process.env.OPENAI_API_KEY;
@@ -209,7 +230,7 @@ async function sendMotorOnOff(waterPumpValue) {
 
 async function sendLightArrayOnOff(lightArrayValue) {
   try {
-    const response = await axios.post(`http://10.173.220.77:80/update-light-array`, null, {
+    const response = await axios.post(`http://149.40.49.178:80/update-light-array`, null, {
       params: {
         lightArrayValue:lightArrayValue
       },

@@ -32,7 +32,7 @@ export class MainServiceService {
   }
 
   updateLightArray(lightArrayValue:boolean){
-    return this.http.post<number>('https://goldfish-app-ueyn8.ondigitalocean.app/api/send-to-esp32-light-array', { lightArrayValue });
+    return this.http.post<number>('http://localhost:8080/api/send-to-esp32-light-array', { lightArrayValue });
   }
 
   updateWaterPump(waterPumpValue:boolean){
