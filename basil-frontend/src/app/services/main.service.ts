@@ -40,7 +40,7 @@ export class MainServiceService {
   }
 
   getChangeableValues(){
-    return this.http.get<ChangeableData>('http://localhost:8080/api/changable-data')
+    return this.http.get<ChangeableData>('https://goldfish-app-ueyn8.ondigitalocean.app/api/changable-data')
   }
 
   setUpModal(){
