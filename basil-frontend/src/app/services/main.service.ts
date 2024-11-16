@@ -32,15 +32,15 @@ export class MainServiceService {
   }
 
   updateLightArray(lightArrayValue:boolean){
-    return this.http.post<number>('https://goldfish-app-ueyn8.ondigitalocean.app/api/send-to-esp32-light-array', { lightArrayValue });
+    return this.http.post<number>('http://localhost:8080/api/send-to-esp32-light-array', { lightArrayValue });
   }
 
   updateWaterPump(waterPumpValue:boolean){
-    return this.http.post<number>('https://goldfish-app-ueyn8.ondigitalocean.app/api/send-to-esp32-water-pump', { waterPumpValue });
+    return this.http.post<number>('http://localhost:8080/api/send-to-esp32-water-pump', { waterPumpValue });
   }
 
   getChangeableValues(){
-    return this.http.get<ChangeableData>('https://goldfish-app-ueyn8.ondigitalocean.app/api/changable-data')
+    return this.http.get<ChangeableData>('http://localhost:8080/api/changable-data')
   }
 
   setUpModal(){

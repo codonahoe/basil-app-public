@@ -10,7 +10,7 @@ var conn = mysql.createPool({
     database: 'dbmaster',
 });
 
-var ipAddress = '192.168.0.158';
+var ipAddress = '192.168.0.80';
 const axios = require('axios');
 var openai = require('openai');
 openai.apiKey = process.env.OPENAI_API_KEY;
@@ -165,7 +165,7 @@ async function getChangeableData() {
 
 async function updateLightArrayInDatabase(lightArrayValue) {
   try {   
-    return conn.execute(`UPDATE ChangeableValues SET LightArrayValue = ${lightArrayValue}`);
+    return conn.execute(`UPDATE ChangeableValues SET LightArray = ${lightArrayValue}`);
   } catch (error) {
     console.error('Database query failed:', error);
     throw error; 
@@ -174,7 +174,7 @@ async function updateLightArrayInDatabase(lightArrayValue) {
 
 async function updateWaterPumpInDatabase(waterPumpValue) {
   try {   
-    return conn.execute(`UPDATE ChangeableValues SET WaterPumpValue = ${waterPumpValue}`);
+    return conn.execute(`UPDATE ChangeableValues SET WaterPump = ${waterPumpValue}`);
   } catch (error) {
     console.error('Database query failed:', error);
     throw error; 
@@ -244,6 +244,7 @@ app.post('/api/send-to-esp32-light-array', (req, res) => {
   if (lightArrayValue) {
     sendLightArrayOnOff(lightArrayValue)
       .then(() => { 
+        console.log('updated')
         updateLightArrayInDatabase(lightArrayValue)
         res.status(200).json({ status: 'success' })
       })
