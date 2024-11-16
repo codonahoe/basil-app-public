@@ -209,7 +209,7 @@ async function sendMotorOnOff(waterPumpValue) {
 
 async function sendLightArrayOnOff(lightArrayValue) {
   try {
-    const response = await axios.post(`http://192.168.0.1:80/update-light-array`, null, {
+    const response = await axios.post(`http://10.173.220.77:80/update-light-array`, null, {
       params: {
         lightArrayValue:lightArrayValue
       },
