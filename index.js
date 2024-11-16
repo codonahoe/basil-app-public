@@ -194,7 +194,7 @@ async function getLogin(username) {
 
 async function sendMotorOnOff(waterPumpValue) {
   try {
-    console.log('update water pump endpoint')
+    console.log('update water pump endpoint', waterPumpValue)
     const response = await axios.post(`http://${ipAddress}/update-water-pump`, null, {
       params: {
         waterPumpValue: waterPumpValue
@@ -209,7 +209,6 @@ async function sendMotorOnOff(waterPumpValue) {
 
 async function sendLightArrayOnOff(lightArrayValue) {
   try {
-    console.log('updating light array endpoint')
     const response = await axios.post(`http://${ipAddress}/update-light-array`, null, {
       params: {
         lightArrayValue:lightArrayValue
@@ -228,8 +227,8 @@ app.post('/api/send-to-esp32-water-pump', (req, res) => {
 
   if (waterPumpValue) {
     sendMotorOnOff(waterPumpValue)
-      .then(() => {
-        updateWaterPumpInDatabase(waterPumpValue)
+      .then(async () => {
+        await updateWaterPumpInDatabase(waterPumpValue)
         res.status(200).json({ status: 'success' })
       })
       .catch((err) => res.status(500).json({ status: 'error', message: err.message }));
@@ -241,11 +240,11 @@ app.post('/api/send-to-esp32-water-pump', (req, res) => {
 app.post('/api/send-to-esp32-light-array', (req, res) => {
   const { lightArrayValue } = req.body;
 
-  if (lightArrayValue) {
+  if (lightArrayValue != null) {
     sendLightArrayOnOff(lightArrayValue)
-      .then(() => { 
+      .then(async () => { 
         console.log('updated')
-        updateLightArrayInDatabase(lightArrayValue)
+        await updateLightArrayInDatabase(lightArrayValue)
         res.status(200).json({ status: 'success' })
       })
       .catch((err) => res.status(500).json({ status: 'error', message: err.message }));
