@@ -19,6 +19,7 @@ wifi.init({
 
 wifi.connect({ssid: 'Voiselle', password:'Password'}, async () => {
   console.log('connected');
+  console.log(wifi)
 
   try {
     const response = await axios.post(`http://${ipAddress}/update-light-array`, null, {
