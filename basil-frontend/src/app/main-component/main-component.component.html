@@ -12,10 +12,38 @@
         This is where you will see all of the data related to your plant.
     </div>
     <div class="basil-material-body mt-3">
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                    <!-- Water Pump Toggle -->
+                <div class="col-6">
+                    <div class="form-check form-switch">
+                        <input 
+                            class="form-check-input" 
+                            type="checkbox" 
+                            id="waterPumpToggle"
+                            (click)="updateWaterPump()"
+                        >
+                        <label class="form-check-label" for="waterPumpToggle">Water Pump is currently {{ waterPumpValue ? 'On' : 'Off' }}</label>
+                    </div>
+                </div>
+                    <!-- Light Array Toggle -->
+                <div class="col-6">
+                    <div class="form-check form-switch">
+                        <input 
+                            class="form-check-input" 
+                            type="checkbox" 
+                            id="lightArrayToggle"
+                            (click)="updateLightArray()" 
+                        >
+                        <label class="form-check-label" for="lightArrayToggle">Light Array Value is currently {{ lightArrayValue ? 'On' : 'Off'}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
       <div class="row justify-content-center">
         <img src="../../assets/basil.png" alt="Basil Plant" class="img-fluid" style="max-width: 300px; margin-bottom: 20px;">
       </div>
-      
       <div class="container mt-5">
         <div *ngFor="let userData of userData; let i = index">
             <div class="mt-3 label grey-label p-2 rounded">Measurement #{{ i + 1 }} taken on {{ userData.addedUTCDateTime }}</div>

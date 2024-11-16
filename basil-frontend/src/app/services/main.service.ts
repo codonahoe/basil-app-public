@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { UserData } from '../interfaces/user-data';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import 'bootstrap';
+import { ChangeableData } from '../interfaces/changeable-data';
 declare var bootstrap: any; // Declare bootstrap to avoid TypeScript errors
 @Injectable({
   providedIn: 'root'
@@ -30,8 +31,16 @@ export class MainServiceService {
     return this.http.get<number>('https://goldfish-app-ueyn8.ondigitalocean.app/api/login', { params });
   }
 
-  updateEsp32(temperature:string, humidity:string){
-    return this.http.post<number>('http://localhost:8080/api/send-to-esp32', { temperature, humidity });
+  updateLightArray(lightArrayValue:boolean){
+    return this.http.post<number>('https://goldfish-app-ueyn8.ondigitalocean.app/api/send-to-esp32-light-array', { lightArrayValue });
+  }
+
+  updateWaterPump(waterPumpValue:boolean){
+    return this.http.post<number>('https://goldfish-app-ueyn8.ondigitalocean.app/api/send-to-esp32-water-pump', { waterPumpValue });
+  }
+
+  getChangeableValues(){
+    return this.http.get<ChangeableData>('https://goldfish-app-ueyn8.ondigitalocean.app/api/changable-data')
   }
 
   setUpModal(){

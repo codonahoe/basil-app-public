@@ -10,7 +10,7 @@ var conn = mysql.createPool({
     database: 'dbmaster',
 });
 
-var ipAddress = '192.168.1.240';
+var ipAddress = '192.168.0.158';
 const axios = require('axios');
 var openai = require('openai');
 openai.apiKey = process.env.OPENAI_API_KEY;
@@ -53,14 +53,24 @@ app.use((req, res, next) =>
 
 app.get('/api/data', async (req, res) => {
   try {
-    let [rows, fields] = await getResults(); 
-    console.log(rows)
+    let [rows, fields] = await getResults();
     return res.json(rows); 
   } catch (error) {
     console.error('Error fetching results:', error);
     res.status(500).json({ message: 'Internal Server Error' }); 
   }
 });
+
+app.get('/api/changable-data', async (req, res) => {
+  try {
+    let [rows, fields] = await getChangeableData(); 
+    return res.json(rows); 
+  } catch (error) {
+    console.error('Error fetching results:', error);
+    res.status(500).json({ message: 'Internal Server Error' }); 
+  }
+});
+
 
 app.get('/api/login', async (req, res) => {
   try {
@@ -143,6 +153,36 @@ async function getResults() {
   }
 }
 
+async function getChangeableData() {
+  try {   
+    return conn.execute('SELECT * FROM ChangeableValues;');
+  } catch (error) {
+    console.error('Database query failed:', error);
+    throw error; 
+  }
+}
+
+
+async function updateLightArrayInDatabase(lightArrayValue) {
+  try {   
+    return conn.execute(`UPDATE ChangeableValues SET LightArrayValue = ${lightArrayValue}`);
+  } catch (error) {
+    console.error('Database query failed:', error);
+    throw error; 
+  }
+}
+
+async function updateWaterPumpInDatabase(waterPumpValue) {
+  try {   
+    return conn.execute(`UPDATE ChangeableValues SET WaterPumpValue = ${waterPumpValue}`);
+  } catch (error) {
+    console.error('Database query failed:', error);
+    throw error; 
+  }
+}
+
+
+
 async function getLogin(username) {
   try {   
     return conn.execute(`SELECT * FROM Users WHERE Username = '${username}'`);
@@ -152,13 +192,12 @@ async function getLogin(username) {
   }
 }
 
-async function sendSensorData(temperature, humidity) {
+async function sendMotorOnOff(waterPumpValue) {
   try {
-    console.log(`${ipAddress}/update-sensor`)
-    const response = await axios.post(`http://${ipAddress}/update-sensor`, null, {
+    console.log('update water pump endpoint')
+    const response = await axios.post(`http://${ipAddress}/update-water-pump`, null, {
       params: {
-        temperature: temperature,
-        humidity: humidity,
+        waterPumpValue: waterPumpValue
       },
     });
     console.log('Response from ESP32:', response.data);
@@ -168,19 +207,52 @@ async function sendSensorData(temperature, humidity) {
   }
 }
 
-app.post('/api/send-to-esp32', (req, res) => {
-  const { temperature, humidity } = req.body;
-  console.log(temperature)
-  console.log(humidity)
+async function sendLightArrayOnOff(lightArrayValue) {
+  try {
+    console.log('updating light array endpoint')
+    const response = await axios.post(`http://${ipAddress}/update-light-array`, null, {
+      params: {
+        lightArrayValue:lightArrayValue
+      },
+    });
+    console.log('Response from ESP32:', response.data);
+  } catch (error) {
+    console.error('Error sending data to ESP32:', error.message);
+    throw error;
+  }
+}
 
-  if (temperature != null && humidity != null) {
-    sendSensorData(temperature, humidity)
-      .then(() => res.status(200).json({ status: 'success' }))
+app.post('/api/send-to-esp32-water-pump', (req, res) => {
+  const { waterPumpValue } = req.body;
+
+
+  if (waterPumpValue) {
+    sendMotorOnOff(waterPumpValue)
+      .then(() => {
+        updateWaterPumpInDatabase(waterPumpValue)
+        res.status(200).json({ status: 'success' })
+      })
       .catch((err) => res.status(500).json({ status: 'error', message: err.message }));
   } else {
     res.status(400).json({ status: 'error', message: 'Missing parameters' });
   }
 });
+
+app.post('/api/send-to-esp32-light-array', (req, res) => {
+  const { lightArrayValue } = req.body;
+
+  if (lightArrayValue) {
+    sendLightArrayOnOff(lightArrayValue)
+      .then(() => { 
+        updateLightArrayInDatabase(lightArrayValue)
+        res.status(200).json({ status: 'success' })
+      })
+      .catch((err) => res.status(500).json({ status: 'error', message: err.message }));
+  } else {
+    res.status(400).json({ status: 'error', message: 'Missing parameters' });
+  }
+});
+
 
 
 module.exports = {
