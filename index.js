@@ -225,7 +225,7 @@ app.post('/api/send-to-esp32-water-pump', (req, res) => {
   const { waterPumpValue } = req.body;
 
 
-  if (waterPumpValue) {
+  if (waterPumpValue != null) {
     sendMotorOnOff(waterPumpValue)
       .then(async () => {
         await updateWaterPumpInDatabase(waterPumpValue)
