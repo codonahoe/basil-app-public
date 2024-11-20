@@ -109,13 +109,16 @@ app.get('/api/ai-feedback', async (req, res) => {
     Temperature of the environment is (${plantData[0].temperature} F, ${plantData[1].temperature} F,${plantData[2].temperature} F), 
     Humidity is (${plantData[0].humidity}%, ${plantData[1].humidity}%, ${plantData[2].humidity}%), 
     Color is (${plantData[0].color}, ${plantData[1].color}, ${plantData[2].color}), 
-    pH is (${plantData[0].ph}, ${plantData[1].ph}, ${plantData[2].ph}). I'm using angular and this response will be for an innerHTML element, give me pure code for innerHTML that looks clean, absolutely no comments or anything. 
+    pH is (${plantData[0].ph}, ${plantData[1].ph}, ${plantData[2].ph}),
+    light is (${plantData[0].light}, ${plantData[1].light}, ${plantData[3].light}).
+    I'm using angular and this response will be for an innerHTML element, give me pure code for innerHTML that looks clean, absolutely no comments or anything. 
     Don't put the html with backticks. Here is an example <div>
     <h2>Basil Plant Health Recommendations</h2>
     <p><strong>Temperature:</strong> CHATGPT RECOMMENDATION HERE.</p>
     <p><strong>Humidity:</strong> CHATGPT RECOMMENDATION HERE.</p>
     <p><strong>Color:</strong> CHATGPT RECOMMENDATION HERE.</p>
     <p><strong>pH Level:</strong> CHATGPT RECOMMENDATION HERE.</p>
+    <p><strong>Light:</strong> CHATGPT RECOMMENDATION HERE.</p>
     <h3>Action Plan (give detailed action plan)</h3>
     <ul>
     (<li></li> suggestions as needed)
