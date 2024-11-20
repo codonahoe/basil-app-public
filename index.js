@@ -102,7 +102,7 @@ app.get('/api/ai-feedback', async (req, res) => {
         ph: record.ph,
       })
     })
-    
+
     const content = `I have a basil plant in a hydroponic system with 
     these values, please help me improve the plants health with recommendations. There are 3 sets of measurements,
     each are represented in parentheses in order from latest to oldest, the first being 1 day old, then 2 days old, then 3 days old.
@@ -110,7 +110,7 @@ app.get('/api/ai-feedback', async (req, res) => {
     Humidity is (${plantData[0].humidity}%, ${plantData[1].humidity}%, ${plantData[2].humidity}%), 
     Color is (${plantData[0].color}, ${plantData[1].color}, ${plantData[2].color}), 
     pH is (${plantData[0].ph}, ${plantData[1].ph}, ${plantData[2].ph}),
-    light is (${plantData[0].light}, ${plantData[1].light}, ${plantData[3].light}).
+    light is (${plantData[0].light}, ${plantData[1].light}, ${plantData[3].light}) lux.
     I'm using angular and this response will be for an innerHTML element, give me pure code for innerHTML that looks clean, absolutely no comments or anything. 
     Don't put the html with backticks. Here is an example <div>
     <h2>Basil Plant Health Recommendations</h2>
