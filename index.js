@@ -9,8 +9,7 @@ var conn = mysql.createPool({
     password: 'G~C$BJ5qfZ3r9SCQAhJ7%4ig2$fQ9osk',
     database: 'dbmaster',
 });
-
-var ipAddress = '192.168.0.158';
+var ipAddress = '192.168.0.80';
 
 const axios = require('axios');
 var openai = require('openai');
@@ -196,7 +195,7 @@ async function getLogin(username) {
 async function sendMotorOnOff(waterPumpValue) {
   try {
     console.log('update water pump endpoint', waterPumpValue)
-    const response = await axios.post(`http://${ipAddress}/update-water-pump`, null, {
+    const response = await axios.post(`http://${ipAddress}:80/update-water-pump`, null, {
       params: {
         waterPumpValue: waterPumpValue
       },
@@ -210,7 +209,7 @@ async function sendMotorOnOff(waterPumpValue) {
 
 async function sendLightArrayOnOff(lightArrayValue) {
   try {
-    const response = await axios.post(`http://149.40.49.178:80/update-light-array`, null, {
+    const response = await axios.post(`http://${ipAddress}:80/update-light-array`, null, {
       params: {
         lightArrayValue:lightArrayValue
       },
@@ -227,6 +226,7 @@ app.post('/api/send-to-esp32-water-pump', (req, res) => {
 
 
   if (waterPumpValue != null) {
+    console.log(waterPumpValue)
     sendMotorOnOff(waterPumpValue)
       .then(async () => {
         await updateWaterPumpInDatabase(waterPumpValue)
@@ -240,7 +240,7 @@ app.post('/api/send-to-esp32-water-pump', (req, res) => {
 
 app.post('/api/send-to-esp32-light-array', (req, res) => {
   const { lightArrayValue } = req.body;
-
+  console.log('sending light array')
   if (lightArrayValue != null) {
     sendLightArrayOnOff(lightArrayValue)
       .then(async () => { 

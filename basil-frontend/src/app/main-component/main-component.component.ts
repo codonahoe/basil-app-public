@@ -24,8 +24,9 @@ export class MainComponentComponent implements OnInit{
       .pipe()
       .subscribe((val) => {
         console.log(val);
-        this.waterPumpValue = val.WaterPump;
-        this.lightArrayValue = val.LightArray;
+        this.waterPumpValue = val[0].WaterPump;
+        this.lightArrayValue = val[0].LightArray;
+        console.log(this.lightArrayValue)
       })
   }
 
@@ -45,9 +46,9 @@ export class MainComponentComponent implements OnInit{
       temperature: Math.round(ud.temperature * 10) / 10,
       humidity: Math.round(ud.humidity * 10) / 10,
       ph: Math.round(ud.ph * 10) / 10,
-      color: Math.round(ud.color * 10) / 10,
+      color: ud.color,
       light: Math.round(ud.light * 10) / 10,
-      waterLevel: Math.round(ud.waterLevel * 10) / 10,
+      waterLevel: ud.waterLevel,
       addedUTCDateTime: format(parseISO(ud.addedUTCDateTime.split('T')[0]), 'MM-dd-yyyy')
     } as UserData
     });
@@ -63,6 +64,7 @@ export class MainComponentComponent implements OnInit{
   }
 
   updateWaterPump(){
+    console.log(this.waterPumpValue)
     const waterPumpValue = !this.waterPumpValue;
     this.mainService.updateWaterPump(waterPumpValue)
     .pipe()

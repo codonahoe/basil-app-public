@@ -2,7 +2,7 @@ export interface UserData{
     id:number,
     temperature:number,
     humidity:number,
-    color:number,
+    color:string,
     ph:number,
     waterLevel:number,
     light:number,
