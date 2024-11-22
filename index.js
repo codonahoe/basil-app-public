@@ -105,7 +105,7 @@ app.get('/api/ai-feedback', async (req, res) => {
     const content = `I have a basil plant in a hydroponic system with 
     these values, please help me improve the plants health with recommendations. There are 3 sets of measurements,
     each are represented in parentheses in order from latest to oldest, the first being 1 day old, then 2 days old, then 3 days old.
-    Temperature of the environment is (${plantData[0].temperature} F, ${plantData[1].temperature} F,${plantData[2].temperature} F), 
+    Temperature of the environment is (${plantData[0].temperature} C, ${plantData[1].temperature} C,${plantData[2].temperature} C), 
     Humidity is (${plantData[0].humidity}%, ${plantData[1].humidity}%, ${plantData[2].humidity}%), 
     Color is (${plantData[0].color}, ${plantData[1].color}, ${plantData[2].color}), 
     pH is (${plantData[0].ph}, ${plantData[1].ph}, ${plantData[2].ph}),
